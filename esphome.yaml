@@ -1,0 +1,65 @@
+wifi:
+  networks:
+    ssid: !secret wifi_ssid
+    password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Nilan Fallback Hotspot"
+    password: !secret wifi_password
+
+# Enable the captive portal for inital WiFi setup
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+substitutions:
+  devicename: nilan
+  friendly_name: Nilan
+
+esphome:
+  name: nilan
+  platform: ESP32
+  board: esp-wrover-kit
+  
+  includes:
+    - nilan/test_sensors.h
+  libraries:
+    - "ModbusMaster"
+
+  on_boot:
+    priority: -10
+    then:
+    - wait_until:
+        api.connected:
+    - logger.log: API is connected!
+
+sensor:
+- platform: custom
+  lambda: |-
+    auto temp_sensors = new TestSensor();
+    App.register_component(temp_sensors);
+    return {temp_sensors->t0_sensor, temp_sensors->t3_sensor, temp_sensors->t4_sensor, temp_sensors->t7_sensor, temp_sensors->t8_sensor};
+
+  sensors:
+  - name: "Nilan Temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 2
+  - name: "Exhaust Temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 2
+  - name: "Outlet Temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 2
+  - name: "Inlet Temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 2
+  - name: "Outdoor Temperature"
+    unit_of_measurement: °C
+    accuracy_decimals: 2
