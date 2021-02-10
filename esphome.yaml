@@ -29,9 +29,8 @@ esphome:
   board: esp-wrover-kit
   
   includes:
-    - nilan/test_sensors.h
-  libraries:
-    - "ModbusMaster"
+    - nilan/src/temp_sensors.h
+#    - nilan/src/temp_sensors.cpp
 
   on_boot:
     priority: -10
@@ -40,12 +39,19 @@ esphome:
         api.connected:
     - logger.log: API is connected!
 
+modbus:
+
+uart:
+  baud_rate: 19200
+  tx_pin: GPIO16
+  rx_pin: GPIO17
+
 sensor:
 - platform: custom
   lambda: |-
-    auto temp_sensors = new TestSensor();
+    auto temp_sensors = new TempSensors();
     App.register_component(temp_sensors);
-    return {temp_sensors->t0_sensor, temp_sensors->t3_sensor, temp_sensors->t4_sensor, temp_sensors->t7_sensor, temp_sensors->t8_sensor};
+    return {temp_sensors->controller_temp_sensor_, temp_sensors->exhaust_temp_sensor_, temp_sensors->outlet_temp_sensor_, temp_sensors->inlet_temp_sensor_, temp_sensors->outdoor_temp_sensor_};
 
   sensors:
   - name: "Nilan Temperature"
