@@ -36,7 +36,7 @@
   reqmax
 };*/
 
-static int16_t rsbuffer[MAXREGSIZE];
+//static int16_t rsbuffer[MAXREGSIZE];
 static const char *TAG = "nilan_temperature";
 
 class TempSensors : public PollingComponent, public esphome::modbus::ModbusDevice
@@ -48,7 +48,9 @@ class TempSensors : public PollingComponent, public esphome::modbus::ModbusDevic
     void set_inlet_temp_sensor(Sensor *inlet_temp_sensor) { inlet_temp_sensor_ = inlet_temp_sensor; }
     void set_outdoor_temp_sensor(Sensor *outdoor_temp_sensor) { outdoor_temp_sensor_ = outdoor_temp_sensor; }
    
-    void update() override {};
+    void update() override {
+      ESP_LOGD(TAG, "Update...");
+    };
 
     void on_modbus_data(const std::vector<uint8_t> &data) override {
       ESP_LOGD(TAG, "Data received...");
