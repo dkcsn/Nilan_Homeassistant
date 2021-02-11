@@ -35,22 +35,25 @@ esphome:
         api.connected:
     - logger.log: API is connected!
 
-# Enable modbus
-modbus:
 # Setup uart, required by modbus
 uart:
-  id: modbus_serial
+  id: uart_nilan
   baud_rate: 19200
   data_bits: 8
   parity: EVEN
   stop_bits: 1
-  rx_pin: GPIO16 #'RX' also compiles
-  tx_pin: GPIO17 #'TX' also compiles
+  rx_pin: GPIO16
+  tx_pin: GPIO17
+
+# Enable modbus
+modbus:
+  id: modbus_nilan
+  uart_id: uart_nilan
 
 sensor:
 - platform: custom
   lambda: |-
-    auto temp_sensors = new TempSensors();
+    auto temp_sensors = new TempSensors(modbus_nilan);
     App.register_component(temp_sensors);
     return {temp_sensors->controller_temp_sensor_, temp_sensors->exhaust_temp_sensor_, temp_sensors->outlet_temp_sensor_, temp_sensors->inlet_temp_sensor_, temp_sensors->outdoor_temp_sensor_};
 
