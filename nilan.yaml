@@ -39,9 +39,13 @@ esphome:
 modbus:
 # Setup uart, required by modbus
 uart:
+  id: modbus_serial
   baud_rate: 19200
-  tx_pin: GPIO16 #'TX' also compiles
-  rx_pin: GPIO17 #'RX' also compiles
+  data_bits: 8
+  parity: EVEN
+  stop_bits: 1
+  rx_pin: GPIO16 #'RX' also compiles
+  tx_pin: GPIO17 #'TX' also compiles
 
 sensor:
 - platform: custom
@@ -54,15 +58,20 @@ sensor:
   - name: "Nilan Temperature"
     unit_of_measurement: °C
     accuracy_decimals: 2
+    id: controller_temperature
   - name: "Exhaust Temperature"
     unit_of_measurement: °C
     accuracy_decimals: 2
+    id: exhaust_temperature
   - name: "Outlet Temperature"
     unit_of_measurement: °C
     accuracy_decimals: 2
+    id: outlet_temperature
   - name: "Inlet Temperature"
     unit_of_measurement: °C
     accuracy_decimals: 2
+    id: inlet_temperature
   - name: "Outdoor Temperature"
     unit_of_measurement: °C
     accuracy_decimals: 2
+    id: outdoor_temperature
