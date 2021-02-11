@@ -42,11 +42,11 @@ static const char *TAG = "nilan_temperature";
 class TempSensors : public PollingComponent, public esphome::modbus::ModbusDevice
 {
   public:
-    void set_controller_temp_sensor(Sensor *controller_temp_sensor) { controller_temp_sensor_ = controller_temp_sensor; }
-    void set_exhaust_temp_sensor(Sensor *exhaust_temp_sensor) { exhaust_temp_sensor_ = exhaust_temp_sensor; }
-    void set_outlet_temp_sensor(Sensor *outlet_temp_sensor) { outlet_temp_sensor_ = outlet_temp_sensor; }
-    void set_inlet_temp_sensor(Sensor *inlet_temp_sensor) { inlet_temp_sensor_ = inlet_temp_sensor; }
-    void set_outdoor_temp_sensor(Sensor *outdoor_temp_sensor) { outdoor_temp_sensor_ = outdoor_temp_sensor; }
+    //void set_controller_temp_sensor(Sensor *controller_temp_sensor) { controller_temp_sensor_ = controller_temp_sensor; }
+    //void set_exhaust_temp_sensor(Sensor *exhaust_temp_sensor) { exhaust_temp_sensor_ = exhaust_temp_sensor; }
+    //void set_outlet_temp_sensor(Sensor *outlet_temp_sensor) { outlet_temp_sensor_ = outlet_temp_sensor; }
+    //void set_inlet_temp_sensor(Sensor *inlet_temp_sensor) { inlet_temp_sensor_ = inlet_temp_sensor; }
+    //void set_outdoor_temp_sensor(Sensor *outdoor_temp_sensor) { outdoor_temp_sensor_ = outdoor_temp_sensor; }
    
     void update() override {
       ESP_LOGD(TAG, "Update...");
@@ -75,9 +75,9 @@ class TempSensors : public PollingComponent, public esphome::modbus::ModbusDevic
     }
 
   protected:
-    Sensor *controller_temp_sensor_;
-    Sensor *exhaust_temp_sensor_;
-    Sensor *outlet_temp_sensor_;
-    Sensor *inlet_temp_sensor_;
-    Sensor *outdoor_temp_sensor_;
+    Sensor *controller_temp_sensor_ = new Sensor();
+    Sensor *exhaust_temp_sensor_ = new Sensor();
+    Sensor *outlet_temp_sensor_ = new Sensor();
+    Sensor *inlet_temp_sensor_ = new Sensor();
+    Sensor *outdoor_temp_sensor_ = new Sensor();
 };
